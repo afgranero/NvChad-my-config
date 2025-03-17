@@ -40,7 +40,28 @@ M.capabilities.textDocument.completion.completionItem = {
   },
 }
 
-require("lspconfig").lua_ls.setup {
+local lspconfig = require("lspconfig")
+
+-- list of all servers configured.
+lspconfig.servers = {
+    "lua_ls",
+    -- "pyright",
+}
+
+local default_servers = {
+    -- "pyright",
+}
+
+-- lsps with default config
+for _, lsp in ipairs(default_servers) do
+  lspconfig[lsp].setup({
+    on_attach = M.on_attach,
+    on_init = M.on_init,
+    capabilities = M.capabilities,
+  })
+end
+
+lspconfig.lua_ls.setup {
   on_init = M.on_init,
   on_attach = M.on_attach,
   capabilities = M.capabilities,
