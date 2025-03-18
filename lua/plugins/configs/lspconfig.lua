@@ -40,12 +40,13 @@ M.capabilities.textDocument.completion.completionItem = {
   },
 }
 
-local lspconfig = require("lspconfig")
+local lspconfig = require "lspconfig"
 
 -- list of all servers configured.
 lspconfig.servers = {
   "lua_ls",
   "pyright",
+  "gopls",
 }
 
 local default_servers = {
@@ -54,11 +55,11 @@ local default_servers = {
 
 -- lsps with default config
 for _, lsp in ipairs(default_servers) do
-  lspconfig[lsp].setup({
+  lspconfig[lsp].setup {
     on_attach = M.on_attach,
     on_init = M.on_init,
     capabilities = M.capabilities,
-  })
+  }
 end
 
 lspconfig.lua_ls.setup {
@@ -81,6 +82,29 @@ lspconfig.lua_ls.setup {
         maxPreload = 100000,
         preloadFileSize = 10000,
       },
+    },
+  },
+}
+
+lspconfig.gopls.setup {
+  on_attach = function(client, bufnr)
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+    M.on_attach(client, bufnr)
+  end,
+  on_init = M.on_init,
+  capabilities = M.capabilities,
+  cmd = { "gopls" },
+  filetypes = { "go", "gomod", "gotmpl", "gowork" },
+  root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
+  settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+      },
+      completeUnimported = true,
+      usePlaceholders = true,
+      staticcheck = true,
     },
   },
 }

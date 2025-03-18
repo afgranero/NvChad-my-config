@@ -3,7 +3,12 @@ local options = {
     "lua",
     "vim",
     "python",
-    "vimdoc"
+    "vimdoc",
+    "go",
+    "gomod",
+    "gosum",
+    "gotmpl",
+    "gowork",
   },
 
   highlight = {

@@ -2,6 +2,7 @@ local options = {
   formatters_by_ft = {
     lua = { "stylua" },
     python = { "isort", "black" },
+    go = { "gofumpt", "goimports-reviser", "golines" },
   },
 
   formatters = {
@@ -18,6 +19,13 @@ local options = {
         "--profile",
         "black",
       },
+    },
+    -- go
+    ["goimports-reviser"] = {
+      prepend_args = { "-rm-unused" },
+    },
+    golines = {
+      prepend_args = { "--max-len=80" },
     },
   },
 
