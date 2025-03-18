@@ -44,12 +44,12 @@ local lspconfig = require("lspconfig")
 
 -- list of all servers configured.
 lspconfig.servers = {
-    "lua_ls",
-    -- "pyright",
+  "lua_ls",
+  "pyright",
 }
 
 local default_servers = {
-    -- "pyright",
+  "pyright",
 }
 
 -- lsps with default config

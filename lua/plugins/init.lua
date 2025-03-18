@@ -124,6 +124,15 @@ local default_plugins = {
     end,
   },
 
+  {
+    "williamboman/mason-lspconfig.nvim",
+    event = "VeryLazy",
+    dependencies = { "nvim-lspconfig" },
+    config = function()
+      require("plugins.configs.mason-lspconfig")
+    end,
+  },
+
   -- load luasnips + cmp related in insert mode only
   {
     "hrsh7th/nvim-cmp",
@@ -229,10 +238,36 @@ local default_plugins = {
   },
 
   {
+    "mfussenegger/nvim-lint",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require("plugins.configs.lint")
+    end,
+  },
+
+  {
+    "rshkarin/mason-nvim-lint",
+    event = "VeryLazy",
+    dependencies = { "nvim-lint" },
+    config = function()
+      require("plugins.configs.mason-lint")
+    end,
+  },
+
+  {
     "stevearc/conform.nvim",
     event = "BufWritePre",
     config = function()
       require("plugins.configs.conform")
+    end,
+  },
+
+  {
+    "zapling/mason-conform.nvim",
+    event = "VeryLazy",
+    dependencies = { "conform.nvim" },
+    config = function()
+      require("plugins.configs.mason-conform")
     end,
   },
 
